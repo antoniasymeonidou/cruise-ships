@@ -1,12 +1,12 @@
 const Port = require('../src/Port.js')
 
-describe('Port', () => {
-  it('can be instantiated', () => {
-    expect(new Port()).toBeInstanceOf(Object)
-  })
 
-  it('returns an object', () => {
-    const port = new Port('Dover')
-    expect(port.name).toEqual('Dover')
-  })
-})
+describe('Port', () => {
+    it('checks if port object can be instantiated', () => {
+      expect(new Port()).toBeInstanceOf(Object);
+    });
+    it('checks if name can be applied to a new port object', () => {
+      const port = new Port('luna');
+      expect(port.name).toBe('luna');
+    });
+  });
