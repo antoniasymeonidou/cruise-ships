@@ -6,7 +6,7 @@ describe('Port', () => {
   })
 
   it('returns an object', () => {
-    const port = new Port('Luna')
-    expect(port.name).toEqual('Luna')
+    const port = new Port('Dover')
+    expect(port.name).toEqual('Dover')
   })
 })
