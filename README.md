@@ -2,7 +2,7 @@
 
 <h2 id="challenge-">Challenge 🚢</h2>
 
-This we will  build and work with many objects that allow a cruise ship to operate. Hopefully we don't hit any icebergs on the way 👀.
+In this challenge we will  build and work with many objects that allow a cruise ship to operate. Hopefully we don't hit any icebergs on the way 👀.
 
 ## Badges
 
