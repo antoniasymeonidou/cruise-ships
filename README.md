@@ -33,7 +33,7 @@ JAVASCRIPT
 
 #### Step 6: 🔃 Create pull request to open a new pull request.
 
-## Authors
+## Solution From
 
 * **Antonia Symeonidou** - [Nanou](https://github.com/antoniasymeonidou)
 
