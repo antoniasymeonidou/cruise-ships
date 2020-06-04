@@ -4,58 +4,59 @@ const Itinerary = require('../src/Itinerary.js')
 
 describe('Ship', () => {
   describe('with ports and an itinerary', () => {
-    let ship
-    let luna
-    let calais
-    let itinerary
+    let luna;
+    let calais;
+    let itinerary;
+    let ship;
 
     beforeEach(() => {
-      luna = new Port('luna')
-      calais = new Port('calais')
-      itinerary = new Itinerary([luna, calais])
-      ship = new Ship(itinerary)
-    })
+      // luna = new Port('Luna');
+      const port = {
+        removeShip: jest.fn(),
+        addShip: jest.fn(),
+      };
+      luna = {
+        ...port,
+        name: 'Luna',
+      };
+      // calais = new Port('Calais');
+      calais = {
+        ...port,
+        name: 'Calais',
+      };
+      // itinerary = new Itinerary([luna, calais]);
+      itinerary = {
+        ports: [luna, calais],
+      };
+      ship = new Ship(itinerary);
+    });
 
     it('can be instantiated', () => {
-      expect(ship).toBeInstanceOf(Object)
-    })
-    it('starting port', () => {
-      expect(ship.currentPort).toBe(luna)
-    })
-    it('can set sail', () => {
-      ship.setSail()
-      expect(luna.ships).not.toContain(ship)
-    })
-    it('gets added to the port on instantiation', () => {
-      expect(luna.ships).toContain(ship)
-    })
-    it('can dock at another port', () => {
-      ship.setSail()
-      ship.dock()
+      expect(ship).toBeInstanceOf(Object);
+    });
 
-      expect(ship.currentPort).toBe(calais)
-      expect(calais.ships).toContain(ship)
-    })
-    it('can\'t sail further than its itinerary', () => {
-      ship.setSail()
-      ship.dock()
+    it('has a starting port', () => {
+      expect(ship.currentPort).toEqual(luna);
+    });
 
-      expect(() => ship.setSail()).toThrowError('End of itinerary reached')
-    })
-    it('can add a ship', () => {
-      luna.addShip(ship)
+    it('Ship > gets added to the port on instantiation', () => { // with spy
+      // expect(luna.ships).toContain(ship);
+      expect(luna.addShip).toHaveBeenCalledWith(ship); 
+    });
 
-      expect(luna.ships).toContain(ship)
-    })
-    it('can remove a ship', () => {
-      const titanic = {}
-      const mary = {}
+    it('Ship > can set sail', () => { // with spy
+      ship.setSail();
+      expect(ship.currentPort).toBeFalsy();
+      expect(luna.removeShip).toHaveBeenCalledWith(ship); 
+      // expect(luna.ships).not.toContain(ship);
+    });
 
-      calais.addShip(titanic)
-      calais.addShip(mary)
-      calais.removeShip(mary)
-
-      expect(calais.ships).toEqual([titanic])
-    })
-  })
-})
+    it('Ship > can dock at a different port', () => { // with spy
+      ship.setSail();
+      ship.dock();
+      expect(ship.currentPort).toEqual(calais);
+      expect(calais.addShip).toHaveBeenCalledWith(ship); 
+      // expect(calais.ships).toContain(ship);
+    });
+  });
+});

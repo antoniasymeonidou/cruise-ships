@@ -1,16 +1,37 @@
-function Port (name) {
-  this.name = name
-  this.ships = []
+// function Port(name) {
+//   this.name = name;
+//   this.ships = [];
+// }
+
+// Port.prototype.addShip = function addShip(ship) {
+//   this.ships.push(ship);
+// };
+
+// Port.prototype.removeShip = function removeShip(ship) {
+//   if (!this.ships.includes(ship)) {
+//     throw new Error('ship is not docked');
+//   }
+//   const shipIndex = this.ships.indexOf(ship);
+//   this.ships.splice(shipIndex, 1);
+// };
+
+class Port {
+  constructor(name) {
+    this.name = name;
+    this.ships = [];
+  }
+
+  addShip(ship) {
+    this.ships.push(ship);
+  }
+
+  removeShip(ship) {
+    if (!this.ships.includes(ship)) {
+      throw new Error('ship is not docked');
+    }
+    const shipIndex = this.ships.indexOf(ship);
+    this.ships.splice(shipIndex, 1);
+  }
 }
 
-Port.prototype.addShip = function (ship) {
-  this.ships.push(ship)
-}
-
-Port.prototype.removeShip = function (ship) {
-  this.ships = this.ships.filter(item => item !== ship)
-}
-
-module.exports = Port
-
-module.exports = Port
+module.exports = Port;
