@@ -18,7 +18,6 @@
 //   this.currentPort.addShip(this);
 // };
 
-
 class Ship {
   constructor(itinerary) {
     this.itinerary = itinerary;

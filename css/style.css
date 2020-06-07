@@ -1,0 +1,87 @@
+html, body {
+  height: 100%;
+}
+
+header {
+  background-color: rgb(0, 0, 0);
+  color: white;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#display{
+  font-weight: 800;
+  z-index: 1000;
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  color: rgb(14, 13, 13);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 30px;
+}
+
+body {
+  background-color: rgb(192, 238, 236);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#viewport {
+  width: 1100px;
+  height: 256px;
+  position: relative;
+  overflow-x: auto;
+  background-image: url(../images/water0.png);
+}
+
+#ports {
+  margin-top: 96px;
+  margin-left: 40px;
+  display: flex;
+  justify-content: space-around;
+}
+
+#ports > .port {
+  width: 64px;
+  height: 32px;
+  background-image: url(../images/port.png);
+}
+
+#ship {
+  width: 128px;
+  height: 64px;
+  background-image: url(../images/ship.png);
+  position: absolute;
+}
+
+#sailbutton {
+  border: 0;
+  background-color: rgb(241, 18, 204);
+  border-bottom: 4px solid rgb(7, 7, 7);
+  color: rgb(15, 1, 1);
+  font-family: inherit;
+  padding: 10px 20px;
+  position: absolute;
+  font-size: 20px;
+  bottom: 10px;
+  left: 30px;
+  border-radius: 50%;
+  
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#sailbutton:focus {
+  background-color: #d4f852;
+  border-bottom-width: 0;
+  padding-top: 14px;
+}
+
+#message {
+  padding: 16px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  border-top: 3px solid rgb(240, 231, 231);
+  background-color: white;
+}
