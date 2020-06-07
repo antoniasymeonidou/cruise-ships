@@ -38,5 +38,5 @@ JAVASCRIPT
 * **Antonia Symeonidou** - [Nanou](https://github.com/antoniasymeonidou)
 
 ## License
-
+- **[MIT license](http://opensource.org/licenses/mit-license.php)**
 - Copyright 2020 © <a href="https://github.com/antoniasymeonidou">Nanou</a>.
