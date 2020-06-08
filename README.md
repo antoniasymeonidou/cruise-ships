@@ -11,7 +11,7 @@ In this challenge we will  build and work with many objects that allow a cruise 
 
 ## Visuals
 
-[![](https://docs.google.com/drawings/d/e/2PACX-1vRWHDz6n0ls2dZ9x6tML23bEeFCLhGGKdpk-EwySAzt-VC4W8oXJUw2wn3wC8_CHp2oxr0STMJBeyen/pub?w=900&h=475)](https://www.youtube.com/watch?v=_jDCljFWt9E)
+[![](https://docs.google.com/drawings/d/e/2PACX-1vRWHDz6n0ls2dZ9x6tML23bEeFCLhGGKdpk-EwySAzt-VC4W8oXJUw2wn3wC8_CHp2oxr0STMJBeyen/pub?w=900&h=400)](https://www.youtube.com/watch?v=_jDCljFWt9E)
 
 
 ## Technologies Used
