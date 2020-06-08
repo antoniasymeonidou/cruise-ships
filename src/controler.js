@@ -1,108 +1,168 @@
-(function exportController() {
+(function exportController () {
   class Controller {
-    constructor(ship) {
-      this.initialiseSea();
-      this.ship = ship;
-      document.querySelector('#sailbutton').addEventListener('click', () => {
+    constructor (ship) {
+      this.ship = ship
+      this.initialiseSea()
+
+      document.querySelector("#sailbutton").addEventListener("click", () => {
         this.setSail();
       });
-      this.createDisplay();
+
+      document.querySelector("#portButton").addEventListener("click", (e) => {
+        e.preventDefault();
+        this.addPort();
+        this.renderPorts(ship.itinerary.ports);
+        this.renderShip();
+        this.displayMessage();
+        document.getElementById("input").value = "";
+      });
     }
 
     initialiseSea() {
-      const backgrounds = [
-        './images/water0.png',
-        './images/water1.png',
-      ];
+      const backgrounds = ["./images/water0.png", "./images/water1.png"];
+
       let backgroundIndex = 0;
+
       window.setInterval(() => {
-        document.querySelector('#viewport').style.backgroundImage = `url('${backgrounds[backgroundIndex % backgrounds.length]}')`;
+        document.querySelector("#viewport").style.backgroundImage = `url(${
+          backgrounds[backgroundIndex % backgrounds.length]
+        })`;
         backgroundIndex += 1;
       }, 1000);
     }
 
-    renderPorts(ports) {
-      const portsElement = document.querySelector('#ports');
-      portsElement.style.width = '0px';
+    renderPorts (ports) {
+      const portsElement = document.querySelector("#ports");
+      console.log(portsElement.childNodes);
+
+      portsElement.style.width = "0px";
+
       ports.forEach((port, index) => {
-        const newPortElement = document.createElement('div');
-        newPortElement.className = 'port';
-        newPortElement.dataset.portIndex = index;
-        newPortElement.dataset.portName = port.name;
-        portsElement.appendChild(newPortElement);
-        const portsElementWidth = parseInt(portsElement.style.width, 10);
-        portsElement.style.width = `${portsElementWidth + 256}px`;
+        if (!document.querySelector(`[data-port-name=${port.portName}]`)) {
+          const newPortElement = document.createElement("div");
+
+          console.log(
+            document.querySelector(`[data-port-name=${port.portName}]`)
+          );
+
+          newPortElement.className = "port";
+          newPortElement.dataset.portName = port.portName;
+          newPortElement.dataset.portIndex = index;
+
+          portsElement.appendChild(newPortElement);
+
+          const portsElementWidth = parseInt(portsElement.style.width, 10);
+          portsElement.style.width = `${portsElementWidth + 256}px`;
+        }
       });
     }
 
     renderShip() {
       const ship = this.ship;
-      const portIndex = ship.itinerary.ports.indexOf(ship.currentPort);
-      const portElement = document.querySelector(`[data-port-index = "${portIndex}"]`);
-      const shipElement = document.querySelector('#ship');
+      const shipPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
+      // finds the index of the ship's currentPort inside of its itinerary.ports
+      const portElement = document.querySelector(
+        `[data-port-index = '${shipPortIndex}']`
+      );
+      // attribute selector to find a .port element that has a portIndex data attribute which corresponds to this index
+
+      const shipElement = document.querySelector("#ship");
       shipElement.style.top = `${portElement.offsetTop + 32}px`;
       shipElement.style.left = `${portElement.offsetLeft - 32}px`;
+
+      // set the top and left CSS properties of your ship element to the offsetTop and offsetLeft values for the port element.
     }
 
     setSail() {
       const ship = this.ship;
-      const nextPortIndex = ship.itinerary.ports.indexOf(ship.currentPort) + 1;
-      const portElement = document.querySelector(`[data-port-index = "${nextPortIndex}"]`);
-      if (!portElement) {
-        this.renderMessage('Your journey is over! Happy Holidays!!');
-        return;
+
+      const currentPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
+      const nextPortIndex = currentPortIndex + 1;
+      const nextPortElement = document.querySelector(
+        `[data-port-index = '${nextPortIndex}']`
+      );
+
+      if (!ship.currentPort) {
+        return this.renderMessage("Add a port name to procceed!");
       }
-      const portPosition = portElement.offsetLeft;
-      const shipElement = document.querySelector('#ship');
-      let shipPosition = shipElement.offsetLeft;
+
+      if (!nextPortElement) {
+        return this.renderMessage(
+          `${ship.currentPort.portName} is your final destination!`
+        );
+      }
+
+      this.renderMessage(`Departing from ${ship.currentPort.portName}`);
       ship.setSail();
-      const departingMessage = `Now departing ${ship.previousPort.name}`;
-      const sailing = setInterval(() => {
-        if (shipPosition === portPosition - 32) {
-          clearInterval(sailing);
+
+      const shipElement = document.querySelector("#ship");
+      const sailInterval = setInterval(() => {
+        const shipLeft = parseInt(shipElement.style.left, 10);
+        if (shipLeft === nextPortElement.offsetLeft - 32) {
+          ship.dock();
+          this.displayMessage();
+          this.renderMessage(`Arriving at ${ship.currentPort.portName}`);
+          clearInterval(sailInterval);
         }
-        shipElement.style.left = `${shipPosition + 1}px`;
-        shipPosition += 1;
-      }, 10);
-      ship.dock();
-      const dockingMessage = `Now docking at ${ship.currentPort.name}`;
-      this.renderMessage(departingMessage);
-      window.setTimeout(() => {
-        this.renderMessage(dockingMessage);
-      }, 2000);
-      window.setTimeout(() => {
-        this.createDisplay();
-      }, 3000);
+        shipElement.style.left = `${shipLeft + 1}px`;
+      }, 20);
     }
 
     renderMessage(message) {
-      const newMessageElement = document.createElement('div');
-      newMessageElement.id = 'message';
-      newMessageElement.innerHTML = message;
-      const viewport = document.querySelector('#viewport');
-      viewport.appendChild(newMessageElement);
-      window.setTimeout(() => {
-        viewport.removeChild(newMessageElement);
+      const messageElement = document.createElement("div");
+      messageElement.id = "message";
+      messageElement.innerHTML = message;
+
+      const viewport = document.querySelector("#viewport");
+      viewport.appendChild(messageElement);
+
+      setTimeout(() => {
+        viewport.removeChild(messageElement);
       }, 2000);
     }
 
-    createDisplay() {
-      const ship = this.ship;
-      const portIndex = ship.itinerary.ports.indexOf(ship.currentPort) + 1;
-      const currentPortElement = document.getElementById('currentPort');
-      const nextPortElement = document.getElementById('nextPort');
-      currentPortElement.innerHTML = `Current Port: ${ship.currentPort.name}`;
-      if (portIndex < ship.itinerary.ports.length) {
-        nextPortElement.innerHTML = `Next Port: ${ship.itinerary.ports[portIndex].name}`;
+    displayMessage() {
+      this.ship = ship;
+
+      const currentPortElement = document.getElementById("current-port");
+      const nextPortElement = document.getElementById("next-port");
+
+      if (ship.currentPort) {
+        currentPortElement.innerText = `Current Port: ${ship.currentPort.portName}`;
+      }
+
+      const currentPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
+      const nextPortIndex = currentPortIndex + 1;
+
+      if (nextPortIndex === ship.itinerary.ports.length) {
+        nextPortElement.innerText = "End of The Trip";
       } else {
-        nextPortElement.innerHTML = 'Final destination';
+        nextPortElement.innerText = `Next Port: ${ship.itinerary.ports[nextPortIndex].portName}`;
+      }
+    }
+
+    addPort() {
+      const ship = this.ship;
+
+      const newPort = document.getElementById("input").value;
+
+      const portObject = new Port(newPort);
+
+      if (newPort === "") {
+        return this.renderMessage("Add a port name to procceed!");
+      }
+      ship.itinerary.ports.push(portObject);
+      console.log(ship.itinerary.ports);
+
+      if (!ship.currentPort) {
+        ship.currentPort = ship.itinerary.ports[0];
       }
     }
   }
 
-  if (typeof module !== 'undefined' && module.exports) {
+  if (typeof module !== "undefined" && module.exports) {
     module.exports = Controller;
   } else {
     window.Controller = Controller;
   }
-}());
+})();
