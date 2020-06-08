@@ -9,6 +9,10 @@ In this challenge we will  build and work with many objects that allow a cruise 
 ![pull requests](https://img.shields.io/bitbucket/pr-raw/antoniasymeonidou/Virtual_Pet)
 ![followers](https://img.shields.io/github/followers/antoniasymeonidou?label=Follow&style=social)
 
+## Visuals
+
+[![](https://docs.google.com/drawings/d/e/2PACX-1vTz-TBNqvFyk2L_QqmqYEJ7_ScsHOfS2EB-i0lCx_ZL1x_wkRSU9OxbD9eycRQ30TjV-T0zSMs-ZK8X/pub?w=700&h=256)](https://www.youtube.com/watch?v=_jDCljFWt9E)
+
 
 ## Technologies Used
 ```
